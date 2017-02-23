@@ -121,11 +121,9 @@ def nelder_mead(BGW, f, iterations, plot=False):
             plt.plot((bgw[2,0], bgw[1,0]), (bgw[2,1], bgw[1,1]), '-c')
             plt.plot((bgw[0,0], bgw[2,0]), (bgw[0,1], bgw[2,1]), '-c')
             plt.plot(bgw[0,0], bgw[0,1], '.r')
-            plt.savefig("{}.png".format(i+1))
             plt.show(block=False)
             plt.pause(0.1)
     plt.show()
-    plt.imsave("{}.png".format(i+1))
 
 
 # ====================================================
