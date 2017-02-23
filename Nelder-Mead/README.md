@@ -2,7 +2,7 @@
 
 Python implementation to find a local minimum of a 2D function.
 
-For the function `f(x,y) = x**2 - 4*x + y**2 - y - x*y`, presentend on the following plots, we computed the local minimum of the function.
+For the function `f(x,y) = x**2 - 4*x + y**2 - y - x*y`, presentend on the following plots, we computed a local minimum.
 
 ![Example function](https://github.com/RodolfoFerro/AIStuff/blob/master/Nelder-Mead/fig1.png "Example function")
 
