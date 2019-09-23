@@ -2,40 +2,52 @@
 # Author: Rodolfo Ferro
 # Contact: https://rodolfoferroxyz/
 #
-# Title: Intro to Machine Learning (ML Zero to Hero, part 2)
-# From: https://www.youtube.com/watch?v=bemDFpNooA8
+# Title: Intro to Machine Learning (ML Zero to Hero, part 4)
+# From: https://www.youtube.com/watch?v=u2TjZzNuly8
 # ========================================================================
 
 
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
+import os
+import zipfile
 
 
-# We load the fashion MNIST dataset:
-fashion_mnist = keras.datasets.fashion_mnist
-(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+# We get the rock_paper_scissors dataset:
+train_dataset_cmd = """
+!wget --no-check-certificate \
+    https://storage.googleapis.com/laurencemoroney-blog.appspot.com/rps.zip \
+    -O /tmp/rps.zip
+"""
 
-# We create a Keras sequential model:
-model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(28, 28)),
-    keras.layers.Dense(128, activation=tf.nn.relu),
-    keras.layers.Dense(10, activation=tf.nn.softmax)
-])
+test_dataset_cmd = """
+!wget --no-check-certificate \
+    https://storage.googleapis.com/laurencemoroney-blog.appspot.com/rps-test-set.zip \
+    -O /tmp/rps-test-set.zip
+"""
 
-# We compile our model:
-model.compile(optimizer=keras.optimizers.Adam(),
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+os.system(train_dataset_cmd)
+os.system(test_dataset_cmd)
 
-# We train the model:
-model.fit(train_images, train_labels, epochs=5)
+# We unzip the files:
+local_zip = '/tmp/rps.zip'
+zip_ref = zipfile.ZipFile(local_zip, 'r')
+zip_ref.extractall('/tmp/')
+zip_ref.close()
 
-# We test the model with testing data:
-test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=False)
-print("Test loss:", test_loss)
-print("Test accuracy:", test_acc)
+local_zip = '/tmp/rps-test-set.zip'
+zip_ref = zipfile.ZipFile(local_zip, 'r')
+zip_ref.extractall('/tmp/')
+zip_ref.close()
 
-# We can predict data from images:
-prediction = model.predict(test_images[:1])
-print(prediction)
+# We can verify the length of the unzipped images:
+rock_dir = os.path.join('/tmp/rps/rock')
+paper_dir = os.path.join('/tmp/rps/paper')
+scissors_dir = os.path.join('/tmp/rps/scissors')
+
+print('Total training rock images:', len(os.listdir(rock_dir)))
+print('Total training paper images:', len(os.listdir(paper_dir)))
+print('Total training scissors images:', len(os.listdir(scissors_dir)))
+
+# TODO. Finish the notebook.
